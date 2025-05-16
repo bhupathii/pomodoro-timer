@@ -39,13 +39,13 @@ const FullscreenButton: React.FC<FullscreenButtonProps> = ({ themeColor = 'red' 
     <motion.button
       whileTap={{ scale: 0.95 }}
       onClick={toggleFullscreen}
-      className="border-2 border-white rounded-md p-4 flex items-center justify-center transition-all duration-200"
+      className="border-2 border-white rounded-md p-2 sm:p-3 md:p-4 flex items-center justify-center transition-all duration-200"
       aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
     >
       {isFullscreen ? (
-        <Minimize className="w-5 h-5 text-white" />
+        <Minimize className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
       ) : (
-        <Maximize className="w-5 h-5 text-white" />
+        <Maximize className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
       )}
     </motion.button>
   );

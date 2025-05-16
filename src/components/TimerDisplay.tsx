@@ -53,12 +53,12 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
   const displayLabel = modeLabel || getDefaultModeLabel();
   
   return (
-    <div className="timer-display relative mb-6 crt scanlines">
+    <div className="timer-display relative mb-4 md:mb-6 crt scanlines">
       {/* Mode indicator - moved to top-left corner with padding */}
       <AnimatePresence mode="wait">
         <motion.div
           key={mode}
-          className={`absolute top-3 left-3 z-20 px-4 py-1 font-pixel-2p text-xs ${getModeColor()} text-white rounded`}
+          className={`absolute top-2 left-2 md:top-3 md:left-3 z-20 px-2 md:px-4 py-1 font-pixel-2p text-[10px] md:text-xs ${getModeColor()} text-white rounded`}
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -10 }}
@@ -77,7 +77,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
       />
 
       {/* Timer display background with scanlines effect */}
-      <div className="flex justify-center items-center h-48 bg-pomo-dark py-12 px-8">
+      <div className="flex justify-center items-center h-32 sm:h-40 md:h-48 bg-pomo-dark py-6 md:py-12 px-4 md:px-8">
         {/* Timer text with glitch effect only on occasion */}
         <motion.div
           key={timeLeft}
@@ -91,7 +91,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
           {/* Sound wave visualization when running - more subtle and aligned */}
           {isRunning && (
             <motion.div 
-              className="absolute -bottom-8 left-0 right-0 flex justify-center space-x-2"
+              className="absolute -bottom-6 md:-bottom-8 left-0 right-0 flex justify-center space-x-2"
               initial={{ opacity: 0.3 }}
               animate={{ opacity: 0.6 }}
               transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
@@ -110,7 +110,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
       
       {/* Recording indicator */}
       {showRecordingIndicator && (
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-2 right-2 md:top-4 md:right-4">
           <motion.div 
             animate={{ 
               scale: [1, 1.2, 1]
@@ -120,7 +120,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
               repeat: Infinity,
               repeatType: "loop"
             }}
-            className={`h-6 w-6 rounded-full record-indicator`}
+            className={`h-4 w-4 md:h-6 md:w-6 rounded-full record-indicator`}
           />
         </div>
       )}

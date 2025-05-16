@@ -91,7 +91,7 @@ export default function Home() {
       )}
       
       {/* Fullscreen and focus mode buttons */}
-      <div className="fixed top-6 right-6 z-30 flex gap-4">
+      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 z-30 flex gap-2 md:gap-4">
         <FocusMode 
           isActive={isFocusMode} 
           onToggle={() => setIsFocusMode(!isFocusMode)} 
@@ -104,10 +104,10 @@ export default function Home() {
       {isFocusMode && (
         <div className="fixed inset-0 pointer-events-none z-20">
           {/* Simple black border with no corner accents */}
-          <div className="absolute top-0 left-0 right-0 h-4 bg-black"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-4 bg-black"></div>
-          <div className="absolute left-0 top-0 bottom-0 w-4 bg-black"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-4 bg-black"></div>
+          <div className="absolute top-0 left-0 right-0 h-2 md:h-4 bg-black"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-2 md:h-4 bg-black"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-2 md:w-4 bg-black"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-2 md:w-4 bg-black"></div>
         </div>
       )}
       
@@ -120,7 +120,7 @@ export default function Home() {
           opacity: 1,
           transition: { duration: 0.5, ease: "easeOut" }
         }}
-        className={`timer-container relative z-10 w-full max-w-md ${isFocusMode ? 'border-0 shadow-none bg-transparent' : ''}`}
+        className={`timer-container relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md mx-4 ${isFocusMode ? 'border-0 shadow-none bg-transparent' : ''}`}
         style={getThemeTransitionStyle}
       >
         {/* System time display at top of timer container - hidden in focus mode */}
@@ -130,7 +130,7 @@ export default function Home() {
         <AnimatePresence>
           {!isFocusMode && (
             <motion.div 
-              className="flex justify-center items-center gap-2 mb-6 mt-4"
+              className="flex justify-center items-center gap-2 mb-4 md:mb-6 mt-2 md:mt-4"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -145,10 +145,10 @@ export default function Home() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                 onClick={() => setIsSettingsOpen(true)}
-                className="pixel-btn pixel-btn-inactive"
+                className="pixel-btn pixel-btn-inactive p-1 md:p-2"
                 aria-label="Open settings"
               >
-                <Settings className="w-5 h-5" />
+                <Settings className="w-4 h-4 md:w-5 md:h-5" />
               </motion.button>
             </motion.div>
           )}
@@ -195,6 +195,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
+            className="mt-2 md:mt-4"
           >
             <ProgressIndicator 
               completedPomodoros={completedPomodoros} 

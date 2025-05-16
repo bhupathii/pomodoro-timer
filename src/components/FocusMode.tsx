@@ -49,7 +49,7 @@ const FocusMode: React.FC<FocusModeProps> = ({
   
   return (
     <motion.button
-      className={`${isActive ? 'bg-black' : ''} border-2 rounded-md p-4 flex items-center justify-center gap-2 transition-all duration-200`}
+      className={`${isActive ? 'bg-black' : ''} border-2 rounded-md p-2 sm:p-3 md:p-4 flex items-center justify-center gap-1 sm:gap-2 transition-all duration-200`}
       style={{
         borderColor: themeStyles.borderColor,
         boxShadow: isActive ? `0 0 5px ${themeStyles.borderColor}` : 'none'
@@ -66,15 +66,15 @@ const FocusMode: React.FC<FocusModeProps> = ({
         style={{ color: themeStyles.color }}
       >
         {isActive ? (
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4 sm:w-5 sm:h-5" />
         ) : (
-          <Maximize className="w-5 h-5" />
+          <Maximize className="w-4 h-4 sm:w-5 sm:h-5" />
         )}
       </motion.div>
       
       {!isActive && (
         <motion.span 
-          className="text-xs uppercase font-medium tracking-wide"
+          className="hidden sm:inline text-xs uppercase font-medium tracking-wide"
           initial={{ opacity: 0, width: 0 }}
           animate={{ opacity: 1, width: 'auto' }}
           exit={{ opacity: 0, width: 0 }}

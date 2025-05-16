@@ -24,6 +24,9 @@ body {
               url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 0h1L0 5v1H0z' fill='rgba(255,255,255,.03)'/%3E%3C/svg%3E");
   font-family: 'VT323', monospace;
   min-height: 100vh;
+  overscroll-behavior: none; /* Prevent pull-to-refresh on mobile */
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  touch-action: manipulation; /* Improve touch experience */
 }
 
 /* Smooth scrolling */
@@ -92,7 +95,7 @@ img {
   
   /* Container styles */
   .timer-container {
-    @apply border-4 border-pomo-light rounded-md bg-pomo-dark p-6 shadow-lg;
+    @apply border-4 border-pomo-light rounded-md bg-pomo-dark p-4 md:p-6 shadow-lg;
     box-shadow: 0 0 0 4px rgba(var(--pomo-light), 0.1),
                 0 8px 20px rgba(0, 0, 0, 0.3),
                 inset 0 0 30px rgba(0, 0, 0, 0.2);
@@ -104,11 +107,11 @@ img {
   }
   
   .timer-text {
-    @apply font-pixel text-8xl tracking-widest text-pomo-light;
+    @apply font-pixel text-5xl sm:text-6xl md:text-8xl tracking-widest text-pomo-light;
   }
   
   .pixel-icon-btn {
-    @apply rounded-md p-4 text-pomo-light border-2 border-pomo-light transition-all duration-200;
+    @apply rounded-md text-pomo-light border-2 border-pomo-light transition-all duration-200;
     box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2);
     transform: translateY(0);
   }
@@ -309,5 +312,35 @@ img {
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
+  
+  /* Mobile-specific optimizations */
+  @media (max-width: 640px) {
+    .timer-container {
+      margin: 0 10px;
+    }
+    
+    .crt::before {
+      background-size: 100% 1px;
+    }
+    
+    .scanlines::before {
+      background-size: 100% 2px;
+    }
+  }
+  
+  /* Improve touch target sizes on mobile */
+  @media (pointer: coarse) {
+    button {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+  
+  /* Disable hover effects on mobile devices */
+  @media (hover: none) {
+    .pixel-btn:hover::after {
+      left: -100%;
+    }
   }
 } 

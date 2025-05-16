@@ -24,19 +24,19 @@ const TimerControls: React.FC<TimerControlsProps> = ({
   onStopAlarm
 }) => {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-3 md:gap-4">
       {/* Main timer controls */}
-      <div className="flex justify-center items-center gap-4 mt-6">
+      <div className="flex justify-center items-center gap-2 md:gap-4 mt-4 md:mt-6">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           onClick={onStart}
-          className={`pixel-icon-btn theme-accent ${(isRunning || isAlarmRinging) ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`pixel-icon-btn p-3 md:p-4 theme-accent ${(isRunning || isAlarmRinging) ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isRunning || isAlarmRinging}
           aria-label="Start timer"
         >
-          <Play className="w-6 h-6" />
+          <Play className="w-4 h-4 md:w-6 md:h-6" />
         </motion.button>
         
         <motion.button
@@ -44,11 +44,11 @@ const TimerControls: React.FC<TimerControlsProps> = ({
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           onClick={onPause}
-          className={`pixel-icon-btn bg-pomo-dark ${(!isRunning || isAlarmRinging) ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`pixel-icon-btn p-3 md:p-4 bg-pomo-dark ${(!isRunning || isAlarmRinging) ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={!isRunning || isAlarmRinging}
           aria-label="Pause timer"
         >
-          <Pause className="w-6 h-6" />
+          <Pause className="w-4 h-4 md:w-6 md:h-6" />
         </motion.button>
         
         <motion.button
@@ -56,10 +56,10 @@ const TimerControls: React.FC<TimerControlsProps> = ({
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           onClick={onReset}
-          className="pixel-icon-btn bg-pomo-dark"
+          className="pixel-icon-btn p-3 md:p-4 bg-pomo-dark"
           aria-label="Reset timer"
         >
-          <RotateCcw className="w-6 h-6" />
+          <RotateCcw className="w-4 h-4 md:w-6 md:h-6" />
         </motion.button>
         
         <motion.button
@@ -67,10 +67,10 @@ const TimerControls: React.FC<TimerControlsProps> = ({
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           onClick={onToggleMute}
-          className="pixel-icon-btn bg-pomo-dark"
+          className="pixel-icon-btn p-3 md:p-4 bg-pomo-dark"
           aria-label={isMuted ? "Unmute notifications" : "Mute notifications"}
         >
-          {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+          {isMuted ? <VolumeX className="w-4 h-4 md:w-6 md:h-6" /> : <Volume2 className="w-4 h-4 md:w-6 md:h-6" />}
         </motion.button>
       </div>
       
@@ -89,11 +89,11 @@ const TimerControls: React.FC<TimerControlsProps> = ({
             repeatType: "loop"
           }}
           onClick={onStopAlarm}
-          className="mt-6 py-3 px-8 rounded-md border-2 border-white text-white font-pixel-2p text-xl flex items-center gap-3"
+          className="mt-4 md:mt-6 py-2 md:py-3 px-4 md:px-8 rounded-md border-2 border-white text-white font-pixel-2p text-sm md:text-xl flex items-center gap-2 md:gap-3"
           style={{ backgroundColor: '#ff4141' }}
           aria-label="Stop alarm sound"
         >
-          <BellOff className="w-6 h-6" />
+          <BellOff className="w-4 h-4 md:w-6 md:h-6" />
           <span>STOP ALARM</span>
         </motion.button>
       )}

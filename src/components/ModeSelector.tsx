@@ -8,13 +8,13 @@ interface ModeSelectorProps {
 
 const ModeSelector: React.FC<ModeSelectorProps> = ({ currentMode, onModeChange }) => {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-center gap-1 sm:gap-2">
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 400, damping: 10 }}
         onClick={() => onModeChange('pomodoro')}
-        className={`pixel-btn ${currentMode === 'pomodoro' ? 'pixel-btn-active' : 'pixel-btn-inactive'}`}
+        className={`pixel-btn text-xs sm:text-sm md:text-base py-1 px-2 sm:py-2 sm:px-3 md:px-4 ${currentMode === 'pomodoro' ? 'pixel-btn-active' : 'pixel-btn-inactive'}`}
         aria-label="Pomodoro timer mode"
       >
         Pomodoro
@@ -25,10 +25,10 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ currentMode, onModeChange }
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 400, damping: 10 }}
         onClick={() => onModeChange('shortBreak')}
-        className={`pixel-btn ${currentMode === 'shortBreak' ? 'pixel-btn-active' : 'pixel-btn-inactive'}`}
+        className={`pixel-btn text-xs sm:text-sm md:text-base py-1 px-2 sm:py-2 sm:px-3 md:px-4 ${currentMode === 'shortBreak' ? 'pixel-btn-active' : 'pixel-btn-inactive'}`}
         aria-label="Short break mode"
       >
-        Short Break
+        Short
       </motion.button>
       
       <motion.button
@@ -36,10 +36,10 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ currentMode, onModeChange }
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 400, damping: 10 }}
         onClick={() => onModeChange('longBreak')}
-        className={`pixel-btn ${currentMode === 'longBreak' ? 'pixel-btn-active' : 'pixel-btn-inactive'}`}
+        className={`pixel-btn text-xs sm:text-sm md:text-base py-1 px-2 sm:py-2 sm:px-3 md:px-4 ${currentMode === 'longBreak' ? 'pixel-btn-active' : 'pixel-btn-inactive'}`}
         aria-label="Long break mode"
       >
-        Long Break
+        Long
       </motion.button>
     </div>
   );

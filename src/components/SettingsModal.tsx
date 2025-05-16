@@ -95,32 +95,32 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-pomo-dark w-full max-w-md p-6 rounded-md border-4 border-pomo-light"
+            className="bg-pomo-dark w-full max-w-md p-4 sm:p-6 rounded-md border-4 border-pomo-light max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-pixel text-pomo-light">Settings</h2>
+              <h2 className="text-xl sm:text-2xl font-pixel text-pomo-light">Settings</h2>
               <button
                 onClick={onClose}
                 className="text-pomo-light hover:opacity-70"
                 aria-label="Close settings"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <div>
-                <h3 className="text-xl font-pixel text-pomo-light mb-3">Timer (minutes)</h3>
-                <div className="grid grid-cols-3 gap-4">
+                <h3 className="text-lg sm:text-xl font-pixel text-pomo-light mb-2 sm:mb-3">Timer (minutes)</h3>
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   <div>
                     <label
                       htmlFor="pomodoro"
-                      className="block text-sm text-pomo-light mb-1"
+                      className="block text-xs sm:text-sm text-pomo-light mb-1"
                     >
                       Pomodoro
                     </label>
@@ -132,7 +132,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                       max="60"
                       value={formValues.pomodoro / 60}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-pomo-dark border-2 border-pomo-light text-pomo-light rounded-md focus:outline-none focus:ring-2"
+                      className="w-full px-2 sm:px-3 py-1 sm:py-2 bg-pomo-dark border-2 border-pomo-light text-pomo-light rounded-md focus:outline-none focus:ring-2 text-sm sm:text-base"
                       style={{ 
                         outlineColor: getThemeColorValue(),
                         boxShadow: `0 0 0 1px ${getThemeColorValue()}05` 
@@ -142,7 +142,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   <div>
                     <label
                       htmlFor="shortBreak"
-                      className="block text-sm text-pomo-light mb-1"
+                      className="block text-xs sm:text-sm text-pomo-light mb-1"
                     >
                       Short Break
                     </label>
@@ -154,7 +154,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                       max="60"
                       value={formValues.shortBreak / 60}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-pomo-dark border-2 border-pomo-light text-pomo-light rounded-md focus:outline-none focus:ring-2"
+                      className="w-full px-2 sm:px-3 py-1 sm:py-2 bg-pomo-dark border-2 border-pomo-light text-pomo-light rounded-md focus:outline-none focus:ring-2 text-sm sm:text-base"
                       style={{ 
                         outlineColor: getThemeColorValue(),
                         boxShadow: `0 0 0 1px ${getThemeColorValue()}05` 
@@ -164,7 +164,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   <div>
                     <label
                       htmlFor="longBreak"
-                      className="block text-sm text-pomo-light mb-1"
+                      className="block text-xs sm:text-sm text-pomo-light mb-1"
                     >
                       Long Break
                     </label>
@@ -176,7 +176,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                       max="60"
                       value={formValues.longBreak / 60}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-pomo-dark border-2 border-pomo-light text-pomo-light rounded-md focus:outline-none focus:ring-2"
+                      className="w-full px-2 sm:px-3 py-1 sm:py-2 bg-pomo-dark border-2 border-pomo-light text-pomo-light rounded-md focus:outline-none focus:ring-2 text-sm sm:text-base"
                       style={{ 
                         outlineColor: getThemeColorValue(),
                         boxShadow: `0 0 0 1px ${getThemeColorValue()}05` 
@@ -371,14 +371,13 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 </div>
               </div>
 
-              <div className="flex justify-end pt-4">
+              <div className="flex justify-end mt-6">
                 <button
                   onClick={handleSave}
-                  className="text-white font-pixel px-6 py-3 rounded-md"
+                  className="pixel-btn pixel-btn-active py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base"
                   style={{ backgroundColor: getThemeColorValue() }}
-                  aria-label="Save settings"
                 >
-                  Save
+                  Save Settings
                 </button>
               </div>
             </div>
