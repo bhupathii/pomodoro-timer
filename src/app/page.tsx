@@ -16,6 +16,7 @@ import FocusMode from '@/components/FocusMode';
 import Clock from '@/components/Clock';
 import AmbientEffects from '@/components/AmbientEffects';
 import CompletionEffects from '@/components/CompletionEffects';
+import LiveUserCounter from '@/components/LiveUserCounter';
 
 export default function Home() {
   const {
@@ -222,6 +223,9 @@ export default function Home() {
         themeColor={settings.themeColor}
         onComplete={handleCompletionDismissed}
       />
+
+      {/* Live user counter */}
+      <LiveUserCounter />
     </main>
   );
 } 
