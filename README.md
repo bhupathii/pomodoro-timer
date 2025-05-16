@@ -23,8 +23,17 @@ This project is optimized for deployment on Vercel.
 
 1. Fork or clone this repository
 2. Import your repository to Vercel
-3. No special environment variables needed
+3. Set up the required environment variables (see below)
 4. Deploy!
+
+### Environment Variables
+
+This project uses Supabase for the live user counter. You'll need to set up these environment variables:
+
+- `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous API key
+
+See the `setup-supabase.md` file for detailed setup instructions.
 
 ## Local Development
 
