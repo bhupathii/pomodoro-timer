@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "devCommand": "next dev",
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "functions": {
+    "api/*.js": {
+      "excludeFiles": "{node_modules/canvas/**}"
+    }
+  }
+} 

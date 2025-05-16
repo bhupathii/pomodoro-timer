@@ -1,66 +1,64 @@
-# Pixel Pomodoro - Retro Timer
+# Pomodoro Timer
 
-A nostalgic pixel-art themed Pomodoro timer app built with Next.js and TypeScript.
+A feature-rich Pomodoro timer web application built with Next.js.
 
 ## Features
 
-- Classic Pomodoro technique with customizable timers
-- Three timer modes: Pomodoro, Short Break, and Long Break
-- Retro pixel art design aesthetic
-- Animated UI elements with Framer Motion
-- Sound notifications when timers complete
-- Persistent settings with localStorage
-- Fully responsive design
-- Automatic session counting
-- Visibility API integration to pause when tab is inactive
+- Multiple timer modes (Pomodoro, Short Break, Long Break)
+- Customizable settings
+- Visual progress indicators
+- Focus mode
+- Sound notifications
+- Different themes
 
-## Technologies Used
+## Deployment on Vercel
 
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Lucide React icons
+This project is optimized for deployment on Vercel.
 
-## Getting Started
+### One-Click Deployment
 
-### Prerequisites
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fusername%2Fpomodoro-timer)
 
-- Node.js 18.0 or later
-- npm or yarn
+### Manual Deployment
 
-### Installation
+1. Fork or clone this repository
+2. Import your repository to Vercel
+3. No special environment variables needed
+4. Deploy!
+
+## Local Development
 
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/yourusername/pixel-pomodoro.git
-   cd pixel-pomodoro
+   git clone https://github.com/username/pomodoro-timer.git
+   cd pomodoro-timer
    ```
 
 2. Install dependencies
 
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
-3. Run the development server
+3. Start the development server
 
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Usage
+## Building for Production
 
-- Select a timer mode (Pomodoro, Short Break, Long Break)
-- Use the play/pause button to start or pause the timer
-- Use the reset button to reset the current timer
-- Use the sound button to toggle sound notifications
-- Click the settings icon to customize timer durations and other settings
-- The app will track completed Pomodoro sessions at the bottom of the screen
+```bash
+npm run build
+```
+
+## Technologies Used
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion

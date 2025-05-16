@@ -2,6 +2,12 @@ const fs = require("fs");
 const { createCanvas } = require("canvas");
 const path = require("path");
 
+// Skip execution on Vercel
+if (process.env.VERCEL === "1") {
+  console.log("Skipping favicon generation on Vercel");
+  process.exit(0);
+}
+
 // Try to install canvas if not available
 try {
   require.resolve("canvas");
