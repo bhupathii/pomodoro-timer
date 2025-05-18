@@ -182,14 +182,15 @@ export default function Home() {
                 />
                 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05, boxShadow: "0px 5px 0px rgba(0, 0, 0, 0.3)" }}
+                  whileTap={{ scale: 0.95, y: 3, boxShadow: "0px 2px 0px rgba(0, 0, 0, 0.2)" }}
                   transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                   onClick={() => setIsSettingsOpen(true)}
-                  className="pixel-btn pixel-btn-inactive p-1 md:p-1.5 glass-button"
+                  className="pixel-icon-btn p-2.5 md:p-3 bg-pomo-dark relative overflow-hidden"
                   aria-label="Open settings"
                 >
-                  <Settings className="w-3 h-3 md:w-4 md:h-4" />
+                  <div className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <Settings className="w-4 h-4 md:w-5 md:h-5" />
                 </motion.button>
               </motion.div>
             )}
