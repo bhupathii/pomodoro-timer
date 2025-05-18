@@ -66,6 +66,16 @@ export default function Home() {
   const handleCompletionDismissed = () => {
     setShowCompletion(false);
     stopAlarm();
+    
+    // If we just completed a pomodoro session, transition to the next mode
+    if (mode === 'pomodoro' && timeLeft === 0) {
+      // Determine whether to start a short or long break
+      const nextMode = completedPomodoros % 4 === 3 ? 'longBreak' : 'shortBreak';
+      setMode(nextMode);
+    } else if ((mode === 'shortBreak' || mode === 'longBreak') && timeLeft === 0) {
+      // Move back to pomodoro mode after a break
+      setMode('pomodoro');
+    }
   };
   
   if (!mounted) return null;

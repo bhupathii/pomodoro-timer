@@ -55,6 +55,7 @@ export function useTimer() {
   // Track if alarm has been triggered for this session
   const alarmTriggeredRef = useRef(false);
   const userInteractedRef = useRef(false);
+  const pomodoroCountedRef = useRef(false);
   
   // Initialize audio element if we're in the browser
   useEffect(() => {
@@ -151,6 +152,7 @@ export function useTimer() {
   // Reset alarm trigger flag when timer is reset or mode changes
   useEffect(() => {
     alarmTriggeredRef.current = false;
+    pomodoroCountedRef.current = false;
   }, [timeLeft, mode, isRunning]);
   
   // Function to stop the alarm
@@ -160,18 +162,28 @@ export function useTimer() {
       audioRef.current.currentTime = 0;
     }
     setIsAlarmRinging(false);
-  }, []);
+    
+    // If the timer reached zero in pomodoro mode and we haven't counted it yet,
+    // increment when the alarm is stopped
+    if (timeLeft === 0 && mode === 'pomodoro' && !pomodoroCountedRef.current) {
+      console.log("Incrementing pomodoro count on alarm stop");
+      setCompletedPomodoros(prev => prev + 1);
+      pomodoroCountedRef.current = true;
+    }
+  }, [timeLeft, mode]);
   
   // Separate timer completion logic for mode changes and counter increments
   useEffect(() => {
     // This effect runs when timeLeft becomes 0
-    if (timeLeft === 0 && !isRunning) {
+    if (timeLeft === 0 && !isRunning && !isAlarmRinging) {
       console.log("Timer reached zero, mode:", mode);
       
       // Increment completed pomodoros ONLY if we just completed a pomodoro session
-      if (mode === 'pomodoro') {
+      // and haven't counted it yet
+      if (mode === 'pomodoro' && !pomodoroCountedRef.current) {
         console.log("Incrementing completed pomodoros");
         setCompletedPomodoros(prev => prev + 1);
+        pomodoroCountedRef.current = true;
         
         if (settings.autoStartBreaks) {
           stopAlarm();
@@ -190,7 +202,7 @@ export function useTimer() {
         setIsRunning(true);
       }
     }
-  }, [timeLeft, isRunning, mode, completedPomodoros, settings, stopAlarm]);
+  }, [timeLeft, isRunning, isAlarmRinging, mode, completedPomodoros, settings, stopAlarm]);
   
   // Visibility change handling (pause timer when tab is inactive)
   useEffect(() => {
