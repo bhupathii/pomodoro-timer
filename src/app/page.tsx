@@ -85,35 +85,63 @@ export default function Home() {
       className={`min-h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden ${isFocusMode ? 'bg-black focus-mode' : `theme-${settings.themeColor}`}`}
       style={{...getThemeTransitionStyle, margin: 0, padding: 0}}
     >
-      {/* Ambient weather effects - disabled in focus mode */}
+      {/* Enhanced ambient weather effects - disabled in focus mode */}
       {!isFocusMode && <AmbientEffects themeColor={settings.themeColor} />}
       
-      {/* Background grid pattern - hidden in focus mode */}
+      {/* Background grid pattern with subtle shimmer - hidden in focus mode */}
       {!isFocusMode && (
-        <motion.div 
-          className="absolute inset-0 bg-[#1a1a1a] z-0 pointer-events-none opacity-30" 
-          style={{ 
-            backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)',
-            backgroundSize: '20px 20px',
-            ...getThemeTransitionStyle
-          }} 
-        />
+        <>
+          <motion.div 
+            className="absolute inset-0 bg-[#1a1a1a] z-0 pointer-events-none opacity-20" 
+            style={{ 
+              backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)',
+              backgroundSize: '20px 20px',
+              ...getThemeTransitionStyle
+            }} 
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20 pointer-events-none z-0"></div>
+          <motion.div 
+            className="absolute inset-0 shimmer pointer-events-none opacity-30 z-0"
+            animate={{
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatType: "mirror"
+            }}
+          />
+        </>
       )}
       
-      {/* Fullscreen and focus mode buttons */}
-      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 z-30 flex gap-2 md:gap-4">
-        <FocusMode 
-          isActive={isFocusMode} 
-          onToggle={() => setIsFocusMode(!isFocusMode)} 
-          themeColor={settings.themeColor} 
-        />
-        <FullscreenButton themeColor={settings.themeColor} />
+      {/* Fullscreen and focus mode buttons with improved styling */}
+      <div className="fixed top-3 right-3 sm:top-5 sm:right-5 md:top-7 md:right-7 z-30 flex gap-3 md:gap-5">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.3 }}
+          className="glass-card p-1.5 rounded-lg"
+        >
+          <FocusMode 
+            isActive={isFocusMode} 
+            onToggle={() => setIsFocusMode(!isFocusMode)} 
+            themeColor={settings.themeColor} 
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.3 }}
+          className="glass-card p-1.5 rounded-lg"
+        >
+          <FullscreenButton themeColor={settings.themeColor} />
+        </motion.div>
       </div>
       
       {/* Border frame for focus mode - now positioned to absolute edges */}
       {isFocusMode && (
         <div className="fixed inset-0 pointer-events-none z-20">
-          {/* Simple black border with no corner accents */}
+          {/* Simple black border with subtle glow */}
           <div className="absolute top-0 left-0 right-0 h-2 md:h-4 bg-black"></div>
           <div className="absolute bottom-0 left-0 right-0 h-2 md:h-4 bg-black"></div>
           <div className="absolute left-0 top-0 bottom-0 w-2 md:w-4 bg-black"></div>
@@ -121,7 +149,7 @@ export default function Home() {
         </div>
       )}
       
-      {/* Main timer container */}
+      {/* Main timer container with improved effects */}
       <motion.div 
         id="timer-container"
         initial={{ scale: 0.95, opacity: 0 }}
@@ -140,7 +168,7 @@ export default function Home() {
         <AnimatePresence>
           {!isFocusMode && (
             <motion.div 
-              className="flex justify-center items-center gap-2 mb-4 md:mb-6 mt-2 md:mt-4"
+              className="flex justify-center items-center gap-2 mb-5 md:mb-7 mt-3 md:mt-5"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -152,10 +180,11 @@ export default function Home() {
               />
               
               <motion.button
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                 onClick={() => setIsSettingsOpen(true)}
-                className="pixel-btn pixel-btn-inactive p-1 md:p-2"
+                className="pixel-btn pixel-btn-inactive p-1.5 md:p-2.5 glass-button"
                 aria-label="Open settings"
               >
                 <Settings className="w-4 h-4 md:w-5 md:h-5" />
@@ -164,7 +193,7 @@ export default function Home() {
           )}
         </AnimatePresence>
         
-        {/* Timer display with glitch effects */}
+        {/* Timer display with glass morphism and glitch effects */}
         <motion.div 
           className="relative"
           animate={isGlitching ? {
@@ -205,7 +234,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="mt-2 md:mt-4"
+            className="mt-2 md:mt-4 mb-10"
           >
             <ProgressIndicator 
               completedPomodoros={completedPomodoros} 
@@ -215,7 +244,7 @@ export default function Home() {
         )}
       </AnimatePresence>
       
-      {/* Settings modal */}
+      {/* Settings modal with enhanced styling */}
       <AnimatePresence>
         {isSettingsOpen && (
           <SettingsModal
@@ -235,8 +264,17 @@ export default function Home() {
         onComplete={handleCompletionDismissed}
       />
 
-      {/* Live user counter */}
-      <LiveUserCounter />
+      {/* Live user counter with glass morphism */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+        className="fixed bottom-3 left-3 z-20"
+      >
+        <div className="glass-card p-1 rounded-lg">
+          <LiveUserCounter />
+        </div>
+      </motion.div>
     </main>
   );
 } 

@@ -32,10 +32,10 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
   // Determine the right color for the mode indicator
   const getModeColor = () => {
     switch(themeColor) {
-      case 'red': return 'bg-red-500';
-      case 'blue': return 'bg-blue-500';
-      case 'green': return 'bg-green-500';
-      default: return 'bg-red-500';
+      case 'red': return 'bg-red-600/90';
+      case 'blue': return 'bg-blue-600/90';
+      case 'green': return 'bg-green-600/90';
+      default: return 'bg-red-600/90';
     }
   };
 
@@ -54,53 +54,81 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
   
   return (
     <div className="timer-display relative mb-4 md:mb-6 crt scanlines">
-      {/* Mode indicator - moved to top-left corner with padding */}
+      {/* Glass overlay effect */}
+      <div className="absolute inset-0 bg-white/5 backdrop-blur-[2px] pointer-events-none z-1"></div>
+      
+      {/* Mode indicator - upgraded with pill shape and animation */}
       <AnimatePresence mode="wait">
         <motion.div
           key={mode}
-          className={`absolute top-2 left-2 md:top-3 md:left-3 z-20 px-2 md:px-4 py-1 font-pixel-2p text-[10px] md:text-xs ${getModeColor()} text-white rounded`}
-          initial={{ opacity: 0, x: -10 }}
+          className={`absolute top-2 left-2 md:top-3 md:left-3 z-20 px-3 md:px-4 py-1 font-pixel-2p text-[10px] md:text-xs ${getModeColor()} text-white rounded-full shadow-lg`}
+          initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -10 }}
-          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.4, type: "spring", stiffness: 300, damping: 25 }}
         >
           {displayLabel}
         </motion.div>
       </AnimatePresence>
 
-      {/* Progress bar with animated transition */}
+      {/* Progress bar with improved animated transition */}
       <motion.div 
-        className={`absolute bottom-0 left-0 h-2 progress-bar`}
+        className={`absolute bottom-0 left-0 h-3 progress-bar z-10`}
+        style={{
+          boxShadow: '0 -1px 8px rgba(255,255,255,0.3)'
+        }}
         initial={{ width: `${progressPercentage}%` }}
         animate={{ width: `${progressPercentage}%` }}
         transition={{ ease: "easeInOut", duration: 0.5 }}
       />
 
-      {/* Timer display background with scanlines effect */}
-      <div className="flex justify-center items-center h-32 sm:h-40 md:h-48 bg-pomo-dark py-6 md:py-12 px-4 md:px-8">
-        {/* Timer text with glitch effect only on occasion */}
+      {/* Timer display background with improved effects */}
+      <div className="flex justify-center items-center h-36 sm:h-44 md:h-52 bg-pomo-dark py-6 md:py-12 px-4 md:px-8 relative">
+        {/* Subtle background grid pattern */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)', 
+            backgroundSize: '20px 20px' 
+          }}>
+        </div>
+        
+        {/* Timer text with enhanced glow and animations */}
         <motion.div
           key={timeLeft}
           variants={isGlitching ? glitchAnimation : undefined}
           initial={isGlitching ? "normal" : undefined}
           animate={isGlitching ? "glitch" : undefined}
           className="timer-text text-center relative"
+          style={{ 
+            textShadow: themeColor === 'red' ? '0 0 10px rgba(220,38,38,0.4)' : 
+                       themeColor === 'blue' ? '0 0 10px rgba(37,99,235,0.4)' : 
+                       '0 0 10px rgba(34,197,94,0.4)'
+          }}
         >
           {formattedTime}
           
-          {/* Sound wave visualization when running - more subtle and aligned */}
+          {/* Enhanced sound wave visualization when running */}
           {isRunning && (
             <motion.div 
-              className="absolute -bottom-6 md:-bottom-8 left-0 right-0 flex justify-center space-x-2"
-              initial={{ opacity: 0.3 }}
-              animate={{ opacity: 0.6 }}
+              className="absolute -bottom-6 md:-bottom-8 left-0 right-0 flex justify-center space-x-1.5"
+              initial={{ opacity: 0.5 }}
+              animate={{ opacity: 0.8 }}
               transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
             >
-              {[...Array(5)].map((_, i) => (
+              {[...Array(7)].map((_, i) => (
                 <motion.div 
                   key={i}
-                  className={`w-1 ${themeColor === 'red' ? 'bg-red-500/30' : themeColor === 'blue' ? 'bg-blue-500/30' : 'bg-green-500/30'}`}
-                  style={{ height: [4, 8, 12, 8, 4][i] }}
+                  className={`w-1 rounded-full ${themeColor === 'red' ? 'bg-red-400/50' : themeColor === 'blue' ? 'bg-blue-400/50' : 'bg-green-400/50'}`}
+                  animate={{ 
+                    height: [4, 8, 16, 24, 16, 8, 4][i],
+                    opacity: [0.7, 0.9, 0.7]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: i * 0.1
+                  }}
                 />
               ))}
             </motion.div>
@@ -108,12 +136,17 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
         </motion.div>
       </div>
       
-      {/* Recording indicator */}
+      {/* Recording indicator with pulsing animation */}
       {showRecordingIndicator && (
         <div className="absolute top-2 right-2 md:top-4 md:right-4">
           <motion.div 
             animate={{ 
-              scale: [1, 1.2, 1]
+              scale: [1, 1.2, 1],
+              boxShadow: [
+                '0 0 0 0 rgba(239, 68, 68, 0.7)',
+                '0 0 0 4px rgba(239, 68, 68, 0)',
+                '0 0 0 0 rgba(239, 68, 68, 0.7)'
+              ]
             }}
             transition={{ 
               duration: 2,
@@ -124,6 +157,9 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
           />
         </div>
       )}
+      
+      {/* Dynamic scan line */}
+      <div className="scan-line"></div>
     </div>
   );
 };

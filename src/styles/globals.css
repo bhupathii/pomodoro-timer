@@ -16,6 +16,12 @@
   --theme-red: 228, 64, 65;
   --theme-blue: 64, 96, 228;
   --theme-green: 46, 184, 87;
+  
+  /* Glass morphism variables */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
 }
 
 body {
@@ -47,6 +53,7 @@ img {
   
   .font-pixel-2p {
     font-family: 'Press Start 2P', cursive;
+    letter-spacing: -0.05em;
   }
   
   /* Button styles */
@@ -55,6 +62,8 @@ img {
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2);
     transform: translateY(0);
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
   }
   
   .pixel-btn:active {
@@ -69,7 +78,7 @@ img {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: 0.5s;
   }
   
@@ -86,7 +95,8 @@ img {
   .pixel-btn-active {
     @apply text-pomo-light border-pomo-light;
     border-bottom-width: 4px;
-    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2),
+                inset 0 10px 20px rgba(255, 255, 255, 0.1);
   }
   
   .pixel-btn-inactive {
@@ -97,28 +107,50 @@ img {
   .timer-container {
     @apply border-4 border-pomo-light rounded-md bg-pomo-dark p-4 md:p-6 shadow-lg;
     box-shadow: 0 0 0 4px rgba(var(--pomo-light), 0.1),
-                0 8px 20px rgba(0, 0, 0, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.4),
                 inset 0 0 30px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(to bottom, 
+                      rgba(60, 60, 60, 0.1), 
+                      rgba(10, 10, 10, 0.1));
   }
   
   .timer-display {
     @apply relative overflow-hidden rounded-md border-4 border-pomo-light;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5),
+                0 5px 15px rgba(0, 0, 0, 0.2);
   }
   
   .timer-text {
     @apply font-pixel text-5xl sm:text-6xl md:text-8xl tracking-widest text-pomo-light;
+    text-shadow: 0 0 10px rgba(var(--pomo-light), 0.3);
   }
   
   .pixel-icon-btn {
     @apply rounded-md text-pomo-light border-2 border-pomo-light transition-all duration-200;
-    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 0px rgba(0, 0, 0, 0.2);
     transform: translateY(0);
+    background-image: linear-gradient(to bottom, 
+                      rgba(255, 255, 255, 0.08), 
+                      rgba(0, 0, 0, 0.05));
   }
   
   .pixel-icon-btn:active {
     @apply transform translate-y-1;
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Glass morphism */
+  .glass-card {
+    @apply backdrop-blur-sm bg-white/5 border border-white/10 rounded-lg;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .glass-button {
+    @apply backdrop-blur-sm bg-white/10 border border-white/20 rounded-md;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to bottom, 
+                      rgba(255, 255, 255, 0.1), 
+                      rgba(255, 255, 255, 0.05));
   }
   
   /* CRT screen effects */
@@ -206,7 +238,7 @@ img {
     background: linear-gradient(
       to right,
       transparent 0%,
-      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.15) 50%,
       transparent 100%
     );
     pointer-events: none;
@@ -238,6 +270,34 @@ img {
     100% { transform: skew(0); }
   }
   
+  /* Shimmer effect for buttons and elements */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    animation: shimmer 6s infinite linear;
+  }
+  
+  @keyframes shimmer {
+    from { transform: translateX(-100%) rotate(30deg); }
+    to { transform: translateX(100%) rotate(30deg); }
+  }
+  
   /* Theme variants */
   .theme-red .pixel-btn-active {
     background-color: rgb(var(--theme-red));
@@ -257,42 +317,46 @@ img {
   .theme-red .progress-bar,
   .theme-red .theme-accent {
     background-color: rgb(var(--theme-red));
-    transition: background-color 0.3s ease;
+    background-image: linear-gradient(to right,
+                      rgba(var(--theme-red), 0.8),
+                      rgba(var(--theme-red), 1));
   }
   
   .theme-blue .progress-bar,
   .theme-blue .theme-accent {
     background-color: rgb(var(--theme-blue));
-    transition: background-color 0.3s ease;
+    background-image: linear-gradient(to right,
+                      rgba(var(--theme-blue), 0.8),
+                      rgba(var(--theme-blue), 1));
   }
   
   .theme-green .progress-bar,
   .theme-green .theme-accent {
     background-color: rgb(var(--theme-green));
-    transition: background-color 0.3s ease;
+    background-image: linear-gradient(to right,
+                      rgba(var(--theme-green), 0.8),
+                      rgba(var(--theme-green), 1));
   }
   
-  /* Record indicator colors */
   .theme-red .record-indicator {
     background-color: rgb(var(--theme-red));
-    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(var(--theme-red), 0.7);
   }
   
   .theme-blue .record-indicator {
     background-color: rgb(var(--theme-blue));
-    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(var(--theme-blue), 0.7);
   }
   
   .theme-green .record-indicator {
     background-color: rgb(var(--theme-green));
-    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(var(--theme-green), 0.7);
   }
   
-  /* Timer display bottom border theme color */
   .theme-red .timer-display,
   .theme-blue .timer-display,
   .theme-green .timer-display {
-    border-bottom-color: transparent;
+    transition: border-color 0.5s ease;
   }
   
   /* Focus mode animations */
