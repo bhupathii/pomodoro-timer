@@ -115,12 +115,12 @@ export default function Home() {
       )}
       
       {/* Fullscreen and focus mode buttons with improved styling */}
-      <div className="fixed top-3 right-3 sm:top-5 sm:right-5 md:top-7 md:right-7 z-30 flex gap-3 md:gap-5">
+      <div className="fixed top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 z-30 flex gap-2">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.3 }}
-          className="glass-card p-1.5 rounded-lg"
+          className="glass-card p-1 rounded-lg"
         >
           <FocusMode 
             isActive={isFocusMode} 
@@ -132,7 +132,7 @@ export default function Home() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.3 }}
-          className="glass-card p-1.5 rounded-lg"
+          className="glass-card p-1 rounded-lg"
         >
           <FullscreenButton themeColor={settings.themeColor} />
         </motion.div>
@@ -142,107 +142,110 @@ export default function Home() {
       {isFocusMode && (
         <div className="fixed inset-0 pointer-events-none z-20">
           {/* Simple black border with subtle glow */}
-          <div className="absolute top-0 left-0 right-0 h-2 md:h-4 bg-black"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-2 md:h-4 bg-black"></div>
-          <div className="absolute left-0 top-0 bottom-0 w-2 md:w-4 bg-black"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-2 md:w-4 bg-black"></div>
+          <div className="absolute top-0 left-0 right-0 h-1 md:h-2 bg-black"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-1 md:h-2 bg-black"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-1 md:w-2 bg-black"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-1 md:w-2 bg-black"></div>
         </div>
       )}
       
-      {/* Main timer container with improved effects */}
-      <motion.div 
-        id="timer-container"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ 
-          scale: 1, 
-          opacity: 1,
-          transition: { duration: 0.5, ease: "easeOut" }
-        }}
-        className={`timer-container relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md mx-4 ${isFocusMode ? 'border-0 shadow-none bg-transparent' : ''}`}
-        style={getThemeTransitionStyle}
-      >
-        {/* System time display at top of timer container - hidden in focus mode */}
-        {!isFocusMode && <Clock showSeconds={true} themeColor={settings.themeColor} />}
-        
-        {/* Controls and mode selector - hidden in focus mode */}
-        <AnimatePresence>
-          {!isFocusMode && (
-            <motion.div 
-              className="flex justify-center items-center gap-2 mb-5 md:mb-7 mt-3 md:mt-5"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ModeSelector
-                currentMode={mode}
-                onModeChange={setMode}
-              />
-              
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                onClick={() => setIsSettingsOpen(true)}
-                className="pixel-btn pixel-btn-inactive p-1.5 md:p-2.5 glass-button"
-                aria-label="Open settings"
-              >
-                <Settings className="w-4 h-4 md:w-5 md:h-5" />
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        
-        {/* Timer display with glass morphism and glitch effects */}
+      {/* More compact container layout */}
+      <div className="flex flex-col items-center justify-center h-screen w-full">
+        {/* Main timer container with improved effects */}
         <motion.div 
-          className="relative"
-          animate={isGlitching ? {
-            x: [-1, 1, 0],
-            opacity: [1, 0.95, 1]
-          } : {}}
-          transition={{ duration: 0.1 }}
+          id="timer-container"
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ 
+            scale: 1, 
+            opacity: 1,
+            transition: { duration: 0.5, ease: "easeOut" }
+          }}
+          className={`timer-container relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto ${isFocusMode ? 'border-0 shadow-none bg-transparent' : ''}`}
+          style={{...getThemeTransitionStyle, padding: '0.75rem'}}
         >
-          <TimerDisplay 
-            timeLeft={timeLeft} 
-            totalTime={totalTime}
-            themeColor={settings.themeColor}
-            showRecordingIndicator={false}
-            isRunning={isRunning}
-            mode={mode}
-            modeLabel={mode === 'pomodoro' ? settings.pomodoroLabel : mode === 'shortBreak' ? settings.shortBreakLabel : settings.longBreakLabel}
-          />
-        </motion.div>
-        
-        {/* Timer controls */}
-        <TimerControls
-          isRunning={isRunning}
-          isMuted={isMuted}
-          isAlarmRinging={isAlarmRinging}
-          onStart={startTimer}
-          onPause={pauseTimer}
-          onReset={resetTimer}
-          onToggleMute={toggleMute}
-          onStopAlarm={stopAlarm}
-        />
-      </motion.div>
-      
-      {/* Progress indicator - hidden in focus mode */}
-      <AnimatePresence>
-        {!isFocusMode && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="mt-2 md:mt-4 mb-10"
+          {/* System time display at top of timer container - hidden in focus mode */}
+          {!isFocusMode && <Clock showSeconds={true} themeColor={settings.themeColor} />}
+          
+          {/* Controls and mode selector - hidden in focus mode */}
+          <AnimatePresence>
+            {!isFocusMode && (
+              <motion.div 
+                className="flex justify-center items-center gap-2 mb-2 md:mb-3 mt-1 md:mt-2"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ModeSelector
+                  currentMode={mode}
+                  onModeChange={setMode}
+                />
+                
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                  onClick={() => setIsSettingsOpen(true)}
+                  className="pixel-btn pixel-btn-inactive p-1 md:p-1.5 glass-button"
+                  aria-label="Open settings"
+                >
+                  <Settings className="w-3 h-3 md:w-4 md:h-4" />
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
+          {/* Timer display with glass morphism and glitch effects */}
+          <motion.div 
+            className="relative"
+            animate={isGlitching ? {
+              x: [-1, 1, 0],
+              opacity: [1, 0.95, 1]
+            } : {}}
+            transition={{ duration: 0.1 }}
           >
-            <ProgressIndicator 
-              completedPomodoros={completedPomodoros} 
-              themeColor={settings.themeColor} 
+            <TimerDisplay 
+              timeLeft={timeLeft} 
+              totalTime={totalTime}
+              themeColor={settings.themeColor}
+              showRecordingIndicator={false}
+              isRunning={isRunning}
+              mode={mode}
+              modeLabel={mode === 'pomodoro' ? settings.pomodoroLabel : mode === 'shortBreak' ? settings.shortBreakLabel : settings.longBreakLabel}
             />
           </motion.div>
-        )}
-      </AnimatePresence>
+          
+          {/* Timer controls */}
+          <TimerControls
+            isRunning={isRunning}
+            isMuted={isMuted}
+            isAlarmRinging={isAlarmRinging}
+            onStart={startTimer}
+            onPause={pauseTimer}
+            onReset={resetTimer}
+            onToggleMute={toggleMute}
+            onStopAlarm={stopAlarm}
+          />
+        
+          {/* Progress indicator - hidden in focus mode */}
+          <AnimatePresence>
+            {!isFocusMode && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3 }}
+                className="mt-2 md:mt-3"
+              >
+                <ProgressIndicator 
+                  completedPomodoros={completedPomodoros} 
+                  themeColor={settings.themeColor} 
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
       
       {/* Settings modal with enhanced styling */}
       <AnimatePresence>
@@ -269,7 +272,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.5 }}
-        className="fixed bottom-3 left-3 z-20"
+        className="fixed bottom-2 left-2 z-20"
       >
         <div className="glass-card p-1 rounded-lg">
           <LiveUserCounter />

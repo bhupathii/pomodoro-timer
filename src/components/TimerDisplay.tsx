@@ -53,7 +53,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
   const displayLabel = modeLabel || getDefaultModeLabel();
   
   return (
-    <div className="timer-display relative mb-4 md:mb-6 crt scanlines">
+    <div className="timer-display relative mb-3 md:mb-4 crt scanlines">
       {/* Glass overlay effect */}
       <div className="absolute inset-0 bg-white/5 backdrop-blur-[2px] pointer-events-none z-1"></div>
       
@@ -61,7 +61,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
       <AnimatePresence mode="wait">
         <motion.div
           key={mode}
-          className={`absolute top-2 left-2 md:top-3 md:left-3 z-20 px-3 md:px-4 py-1 font-pixel-2p text-[10px] md:text-xs ${getModeColor()} text-white rounded-full shadow-lg`}
+          className={`absolute top-1 left-1 md:top-2 md:left-2 z-20 px-2 md:px-3 py-0.5 font-pixel-2p text-[8px] md:text-[10px] ${getModeColor()} text-white rounded-full shadow-lg`}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
@@ -73,7 +73,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
 
       {/* Progress bar with improved animated transition */}
       <motion.div 
-        className={`absolute bottom-0 left-0 h-3 progress-bar z-10`}
+        className={`absolute bottom-0 left-0 h-2 progress-bar z-10`}
         style={{
           boxShadow: '0 -1px 8px rgba(255,255,255,0.3)'
         }}
@@ -83,7 +83,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
       />
 
       {/* Timer display background with improved effects */}
-      <div className="flex justify-center items-center h-36 sm:h-44 md:h-52 bg-pomo-dark py-6 md:py-12 px-4 md:px-8 relative">
+      <div className="flex justify-center items-center h-28 sm:h-32 md:h-40 bg-pomo-dark py-4 md:py-8 px-3 md:px-6 relative">
         {/* Subtle background grid pattern */}
         <div className="absolute inset-0 opacity-10 pointer-events-none" 
           style={{ 
@@ -110,17 +110,17 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
           {/* Enhanced sound wave visualization when running */}
           {isRunning && (
             <motion.div 
-              className="absolute -bottom-6 md:-bottom-8 left-0 right-0 flex justify-center space-x-1.5"
+              className="absolute -bottom-4 md:-bottom-6 left-0 right-0 flex justify-center space-x-1"
               initial={{ opacity: 0.5 }}
               animate={{ opacity: 0.8 }}
               transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
             >
-              {[...Array(7)].map((_, i) => (
+              {[...Array(5)].map((_, i) => (
                 <motion.div 
                   key={i}
                   className={`w-1 rounded-full ${themeColor === 'red' ? 'bg-red-400/50' : themeColor === 'blue' ? 'bg-blue-400/50' : 'bg-green-400/50'}`}
                   animate={{ 
-                    height: [4, 8, 16, 24, 16, 8, 4][i],
+                    height: [3, 6, 10, 6, 3][i],
                     opacity: [0.7, 0.9, 0.7]
                   }}
                   transition={{
@@ -138,13 +138,13 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
       
       {/* Recording indicator with pulsing animation */}
       {showRecordingIndicator && (
-        <div className="absolute top-2 right-2 md:top-4 md:right-4">
+        <div className="absolute top-1 right-1 md:top-2 md:right-2">
           <motion.div 
             animate={{ 
               scale: [1, 1.2, 1],
               boxShadow: [
                 '0 0 0 0 rgba(239, 68, 68, 0.7)',
-                '0 0 0 4px rgba(239, 68, 68, 0)',
+                '0 0 0 3px rgba(239, 68, 68, 0)',
                 '0 0 0 0 rgba(239, 68, 68, 0.7)'
               ]
             }}
@@ -153,7 +153,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
               repeat: Infinity,
               repeatType: "loop"
             }}
-            className={`h-4 w-4 md:h-6 md:w-6 rounded-full record-indicator`}
+            className={`h-3 w-3 md:h-4 md:w-4 rounded-full record-indicator`}
           />
         </div>
       )}

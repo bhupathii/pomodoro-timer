@@ -66,10 +66,10 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   }, [currentSetProgress, completedPomodoros]);
   
   return (
-    <div className="mt-10 text-center">
-      {/* Glass card container */}
+    <div className="mt-4 text-center">
+      {/* Glass card container - more compact */}
       <motion.div
-        className="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 shadow-xl"
+        className="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10 shadow-xl"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
@@ -78,10 +78,10 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="font-pixel-2p text-pomo-light text-lg mb-5 flex items-center justify-center gap-2"
+          className="font-pixel-2p text-pomo-light text-xs mb-3 flex items-center justify-center gap-2"
         >
           <span 
-            className={`px-3 py-1 rounded-md ${
+            className={`px-2 py-1 rounded-md ${
               themeColor === 'red' ? 'bg-red-600/30' : 
               themeColor === 'blue' ? 'bg-blue-600/30' : 
               'bg-green-600/30'
@@ -92,7 +92,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           
           {completedSets > 0 && (
             <motion.span 
-              className="text-sm opacity-80 font-pixel"
+              className="text-xs opacity-80 font-pixel"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.8 }}
             >
@@ -101,10 +101,10 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           )}
         </motion.div>
         
-        <div className="flex justify-center gap-6 mt-6 mb-2 relative">
+        <div className="flex justify-center gap-4 mt-2 mb-1 relative">
           {/* Enhanced soil ground with texture */}
           <div 
-            className="absolute -bottom-5 left-0 right-0 h-5 rounded-lg"
+            className="absolute -bottom-3 left-0 right-0 h-3 rounded-lg"
             style={{ 
               background: 'linear-gradient(to bottom, #5d4037 0%, #3E2723 100%)',
               boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.3)',
@@ -112,19 +112,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
             }} 
           />
           
-          {/* Small decorative rocks */}
-          <motion.div 
-            className="absolute -bottom-3 left-5 w-2 h-1 bg-gray-400 rounded-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
-            transition={{ delay: 1.2 }}
-          />
-          <motion.div 
-            className="absolute -bottom-2 right-10 w-3 h-2 bg-gray-500 rounded-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.3 }}
-            transition={{ delay: 1.5 }}
-          />
+          {/* Small decorative rocks - removed for compactness */}
           
           {/* Growth indicators with improved visuals */}
           {growthStages.map((growth, index) => {
@@ -152,8 +140,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                         >
                           <motion.div
                             animate={{ 
-                              y: [0, -2, 0],
-                              rotate: [0, 1, 0, -1, 0]
+                              y: [0, -1, 0]
                             }}
                             transition={{
                               duration: 3,
@@ -163,16 +150,16 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                             }}
                           >
                             <TomatoIcon 
-                              size={36} 
+                              size={28} 
                               className={themeColor !== 'red' ? 'grayscale-[30%] brightness-75' : ''} 
                             />
                             {/* Add leaves to completed tomatoes */}
-                            <LeafIcon position="left" />
-                            <LeafIcon position="right" />
+                            <LeafIcon size={6} position="left" />
+                            <LeafIcon size={6} position="right" />
                           </motion.div>
                           
                           {/* Glow effect underneath */}
-                          <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-2 rounded-full blur-sm ${
+                          <div className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-1 rounded-full blur-sm ${
                             themeColor === 'red' ? 'bg-red-500/30' : 
                             themeColor === 'blue' ? 'bg-blue-500/30' : 
                             'bg-green-500/30'
@@ -185,8 +172,8 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                         <motion.div
                           initial={{ scale: 0.5, y: 10 }}
                           animate={{ 
-                            scale: [0.5, 0.6, 0.5], 
-                            y: [10, 7, 10]
+                            scale: [0.5, 0.55, 0.5], 
+                            y: [8, 6, 8]
                           }}
                           transition={{ 
                             repeat: Infinity,
@@ -195,19 +182,19 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                           }}
                         >
                           <TomatoIcon 
-                            size={28} 
+                            size={22} 
                             className={`${themeColor !== 'red' ? 'grayscale-[50%] brightness-75' : ''}`} 
                           />
                           
                           {/* Pulsing growth indicator */}
                           <motion.div 
-                            className={`absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full opacity-30 ${
+                            className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full opacity-30 ${
                               themeColor === 'red' ? 'bg-red-500' : 
                               themeColor === 'blue' ? 'bg-blue-500' : 
                               'bg-green-500'
                             }`}
                             animate={{
-                              scale: [1, 1.5, 1],
+                              scale: [1, 1.3, 1],
                               opacity: [0.2, 0.3, 0.2]
                             }}
                             transition={{
@@ -223,7 +210,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                 
                 {/* Enhanced soil plots with better texture */}
                 <motion.div
-                  className="h-4 w-10 rounded-lg relative bottom-0"
+                  className="h-3 w-8 rounded-lg relative bottom-0"
                   style={{
                     background: 'linear-gradient(to bottom, #6D4C41 0%, #5D4037 100%)', 
                     boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2)'
@@ -248,11 +235,11 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ delay: 0.8 }}
-          className="text-pomo-light text-xs mt-12 font-pixel backdrop-blur-sm py-2 px-4 rounded-lg border border-white/5 inline-block"
+          className="text-pomo-light text-xs mt-5 font-pixel backdrop-blur-sm py-1 px-3 rounded-lg border border-white/5 inline-block"
         >
           {completedPomodoros > 0 ? 
-            `You've grown ${completedPomodoros} tomato${completedPomodoros !== 1 ? 's' : ''}. Keep going!` 
-            : 'Complete your first pomodoro to start growing tomatoes.'}
+            `${completedPomodoros} tomato${completedPomodoros !== 1 ? 's' : ''} grown. Keep it up!` 
+            : 'Complete your first pomodoro!'}
         </motion.div>
       </motion.div>
     </div>
