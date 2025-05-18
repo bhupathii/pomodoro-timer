@@ -268,15 +268,15 @@ export default function Home() {
         onComplete={handleCompletionDismissed}
       />
 
-      {/* Live user counter with glass morphism */}
+      {/* Live user counter with glass morphism and theme consistency */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.5 }}
-        className="fixed bottom-2 left-2 z-20"
+        className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-20"
       >
-        <div className="glass-card p-1 rounded-lg">
-          <LiveUserCounter />
+        <div className={`glass-card p-1.5 rounded-lg border border-${settings.themeColor === 'red' ? 'red' : settings.themeColor === 'blue' ? 'blue' : 'green'}-500/30`}>
+          <LiveUserCounter themeColor={settings.themeColor} />
         </div>
       </motion.div>
     </main>

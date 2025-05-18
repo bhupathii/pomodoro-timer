@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useActiveUsers } from '@/hooks/useActiveUsers';
 
-const LiveUserCounter: React.FC = () => {
+type ThemeColor = 'red' | 'blue' | 'green';
+
+interface LiveUserCounterProps {
+  themeColor?: ThemeColor;
+}
+
+const LiveUserCounter: React.FC<LiveUserCounterProps> = ({ themeColor = 'red' }) => {
   const { activeUsers, loading, error } = useActiveUsers();
   const [animate, setAnimate] = useState(false);
   const [prevCount, setPrevCount] = useState(0);
+
+  // Get theme-appropriate colors
+  const getStatusColor = () => {
+    if (activeUsers <= 0) return 'bg-red-500';
+    return themeColor === 'red' 
+      ? 'bg-red-400' 
+      : themeColor === 'blue' 
+        ? 'bg-blue-400' 
+        : 'bg-green-400';
+  };
 
   // Add a subtle animation effect when count changes
   useEffect(() => {
@@ -26,15 +42,15 @@ const LiveUserCounter: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="inline-block">
       <div 
-        className={`flex items-center gap-1.5 px-3 py-1.5 bg-pomo-dark border-2 border-pomo-light rounded-md 
-        font-pixel text-pomo-light transition-all duration-300 shadow-pixel-sm
+        className={`flex items-center gap-1.5 px-2 py-1 bg-pomo-dark/80 backdrop-blur-sm rounded-md 
+        font-pixel text-pomo-light transition-all duration-300
         ${animate ? 'scale-110' : 'scale-100'}`}
       >
-        <div className={`h-2 w-2 rounded-full ${activeUsers > 0 ? 'bg-green-500' : 'bg-red-500'} animate-pulse`}></div>
-        <span className="text-xs">
-          {loading ? '--' : activeUsers} {error ? '(error)' : ''} online
+        <div className={`h-2 w-2 rounded-full ${getStatusColor()} animate-pulse`}></div>
+        <span className="text-xs whitespace-nowrap">
+          {loading ? '--' : activeUsers} online
         </span>
       </div>
     </div>
