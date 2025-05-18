@@ -67,7 +67,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   
   return (
     <div className="mt-4 text-center">
-      {/* Glass card container - more compact */}
+      {/* Decorative glass card */}
       <motion.div
         className="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10 shadow-xl"
         initial={{ opacity: 0, y: 20 }}
@@ -102,7 +102,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
         </motion.div>
         
         <div className="flex justify-center gap-4 mt-2 mb-1 relative">
-          {/* Enhanced soil ground with texture */}
+          {/* Soil base */}
           <div 
             className="absolute -bottom-3 left-0 right-0 h-3 rounded-lg"
             style={{ 
@@ -130,7 +130,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                       exit="exit"
                       className="relative"
                     >
-                      {/* Completed tomato with leaves */}
+                      {/* Ripe tomato */}
                       {isCompleted && (
                         <motion.div
                           initial={{ scale: 0.5, y: 20 }}
@@ -158,7 +158,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                             <LeafIcon size={6} position="right" />
                           </motion.div>
                           
-                          {/* Glow effect underneath */}
+                          {/* Glow effect */}
                           <div className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-1 rounded-full blur-sm ${
                             themeColor === 'red' ? 'bg-red-500/30' : 
                             themeColor === 'blue' ? 'bg-blue-500/30' : 
@@ -167,7 +167,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                         </motion.div>
                       )}
                       
-                      {/* Growing tomato with enhanced animations */}
+                      {/* Growing tomato */}
                       {isCurrentPosition && !isCompleted && (
                         <motion.div
                           initial={{ scale: 0.5, y: 10 }}
@@ -186,7 +186,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                             className={`${themeColor !== 'red' ? 'grayscale-[50%] brightness-75' : ''}`} 
                           />
                           
-                          {/* Pulsing growth indicator */}
+                          {/* Growth pulse */}
                           <motion.div 
                             className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full opacity-30 ${
                               themeColor === 'red' ? 'bg-red-500' : 
@@ -208,7 +208,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                   )}
                 </AnimatePresence>
                 
-                {/* Enhanced soil plots with better texture */}
+                {/* Soil plot */}
                 <motion.div
                   className="h-3 w-8 rounded-lg relative bottom-0"
                   style={{

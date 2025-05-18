@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
 
-// This is a serverless function that can be scheduled to run every few minutes
-// to clean up inactive sessions. You can set up a cron job on Vercel to call this endpoint.
+// Endpoint for removing stale user sessions
+// Called by Vercel cron job every 5 minutes
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check for secret token to prevent unauthorized access

@@ -11,7 +11,7 @@ A retro-styled productivity timer with modern features and pixel-perfect UI desi
 
 <p align="center">
   <img src="https://img.shields.io/badge/dynamic/json?color=brightgreen&label=Active%20Users&query=count&url=https://pomodoro-timer-alpha-gilt.vercel.app/api/active-users&style=for-the-badge&logo=vercel&logoColor=white" alt="Active Users" />
-  <img src="https://img.shields.io/github/stars/username/pomodoro-timer?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Stars" />
+  <img src="https://img.shields.io/github/stars/bhupathii/pomodoro-timer?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Stars" />
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License" />
 </p>
 
@@ -31,7 +31,7 @@ A retro-styled productivity timer with modern features and pixel-perfect UI desi
 
 ## 🚀 Live Demo
 
-Experience the Pixel Pomodoro in action at [https://pomodoro-timer-alpha-gilt.vercel.app](https://pomodoro-timer-alpha-gilt.vercel.app)
+Check out my Pixel Pomodoro in action at [https://pomodoro-timer-alpha-gilt.vercel.app](https://pomodoro-timer-alpha-gilt.vercel.app)
 
 <div align="center">
   <img src="public/screenshot.png" alt="Pomodoro Timer Screenshot" width="600" />
@@ -39,24 +39,24 @@ Experience the Pixel Pomodoro in action at [https://pomodoro-timer-alpha-gilt.ve
 
 ## 🔥 Live User Counter
 
-The application features a real-time user counter showing how many people around the world are currently using Pixel Pomodoro. This creates a sense of global productivity community!
+I built a real-time user counter showing how many people are currently using Pixel Pomodoro. This creates a sense of global productivity community!
 
 - The counter updates in real-time as users connect/disconnect
 - Changes are animated with subtle visual feedback
 - Status indicator changes color based on the currently selected theme
 
-This feature is powered by Supabase Realtime and counts active users across all device types.
+I implemented this using Supabase Realtime to count active users across all device types.
 
 ## 📦 One-Click Deployment
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fusername%2Fpomodoro-timer)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbhupathii%2Fpomodoro-timer)
 
 ## 💻 Local Development
 
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/username/pomodoro-timer.git
+   git clone https://github.com/bhupathii/pomodoro-timer.git
    cd pomodoro-timer
    ```
 
@@ -80,12 +80,12 @@ This feature is powered by Supabase Realtime and counts active users across all 
 
 ## 🔧 Environment Variables
 
-This project uses Supabase for the live user counter feature:
+I use Supabase for the live user counter feature:
 
 - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous API key
 
-See the `setup-supabase.md` file for detailed setup instructions.
+Check out my `setup-supabase.md` file for my detailed setup notes.
 
 ## 🧰 Technologies Used
 
@@ -100,6 +100,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgements
 
-- Pixel art inspiration from various retro games
-- Sound effects created using [ZzFX](https://github.com/KilledByAPixel/ZzFX)
+- Pixel art inspired by my favorite retro games
+- Sound effects I created with [ZzFX](https://github.com/KilledByAPixel/ZzFX)
 - Pixel font from [Google Fonts](https://fonts.google.com/)

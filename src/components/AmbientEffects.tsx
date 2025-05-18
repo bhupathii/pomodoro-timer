@@ -16,7 +16,6 @@ const AmbientEffects: React.FC<AmbientEffectsProps> = ({ themeColor }) => {
   
   const weatherVariants = getWeatherAnimationVariants();
   
-  // Generate an array of elements for rain/snow effects
   const weatherElements = useMemo(() => {
     if (currentWeather === 'sunny' || currentWeather === 'cloudy') return [];
     
@@ -31,14 +30,11 @@ const AmbientEffects: React.FC<AmbientEffectsProps> = ({ themeColor }) => {
     }));
   }, [currentWeather]);
   
-  // Get background style based on time of day and weather
   const getBackgroundStyle = () => {
-    // Base styles for day/night
     const baseStyle = isDaytime ? 
       'opacity-10' : 
       'opacity-20 brightness-50';
       
-    // Add weather-specific styles
     switch(currentWeather) {
       case 'rain': 
         return `${baseStyle} bg-blue-900/10`;
@@ -54,7 +50,7 @@ const AmbientEffects: React.FC<AmbientEffectsProps> = ({ themeColor }) => {
   
   return (
     <>
-      {/* Moving scanlines effect */}
+      {/* CRT scanlines */}
       <motion.div 
         className="fixed top-0 left-0 w-full h-full pointer-events-none z-10"
         variants={scanLineAnimation}
@@ -66,9 +62,9 @@ const AmbientEffects: React.FC<AmbientEffectsProps> = ({ themeColor }) => {
         }}
       />
       
-      {/* Weather overlay */}
+      {/* Weather layer */}
       <div className={`fixed inset-0 pointer-events-none z-0 ${getBackgroundStyle()}`}>
-        {/* For sunny weather - sun element */}
+        {/* Sun */}
         {currentWeather === 'sunny' && (
           <motion.div 
             className={`absolute top-10 right-10 w-16 h-16 rounded-full bg-yellow-400 opacity-70 shadow-lg`}
@@ -78,7 +74,7 @@ const AmbientEffects: React.FC<AmbientEffectsProps> = ({ themeColor }) => {
           />
         )}
         
-        {/* For cloudy weather - cloud element */}
+        {/* Cloud */}
         {currentWeather === 'cloudy' && (
           <motion.div 
             className="absolute top-20 w-32 h-16 opacity-40"
@@ -91,7 +87,7 @@ const AmbientEffects: React.FC<AmbientEffectsProps> = ({ themeColor }) => {
           />
         )}
         
-        {/* Rain/snow drops */}
+        {/* Precipitation */}
         {weatherElements.map(element => (
           <motion.div
             key={element.id}

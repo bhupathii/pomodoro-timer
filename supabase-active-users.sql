@@ -1,7 +1,7 @@
 -- Create a table for active user sessions
 CREATE TABLE IF NOT EXISTS active_sessions (
   session_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id TEXT NOT NULL, -- This will be a browser-generated unique ID
+  user_id TEXT NOT NULL,
   page TEXT NOT NULL,
   last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()

@@ -1,36 +1,35 @@
-# Setting Up Supabase for Pomodoro User Counter
+# My Supabase Setup for Pomodoro User Counter
 
-This guide explains how to set up Supabase for the live user counter feature in the Pomodoro Timer application.
+Here's how I set up Supabase for the live user counter feature in my Pomodoro Timer.
 
-## Step 1: Create a Supabase Account and Project
+## Step 1: Supabase Account Creation
 
-1. Go to [supabase.com](https://supabase.com/) and sign up
-2. Create a new organization if needed
-3. Start a new project and give it a name (e.g., "pomodoro-timer")
-4. Choose a strong database password and save it for later
-5. Choose a region closest to your target audience
-6. Wait for your database to be provisioned (usually takes ~2 minutes)
+1. Created account at [supabase.com](https://supabase.com/)
+2. Set up a new organization
+3. Started a project named "pomodoro-timer"
+4. Used a strong database password (stored in my password manager)
+5. Selected European region (closest to my target users)
+6. Waited for database provisioning
 
-## Step 2: Create Database Tables and Functions
+## Step 2: Database Setup
 
-1. In the Supabase dashboard, go to the "SQL Editor"
-2. Create a new query and paste the contents of the `supabase-active-users.sql` file or use the SQL below:
+I created these database elements:
 
 ```sql
--- Create a table for active user sessions
+-- Active user sessions table
 CREATE TABLE IF NOT EXISTS active_sessions (
   session_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id TEXT NOT NULL, -- This will be a browser-generated unique ID
+  user_id TEXT NOT NULL,
   page TEXT NOT NULL,
   last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Create index for faster queries
+-- Indexes for performance
 CREATE INDEX IF NOT EXISTS active_sessions_last_seen_idx ON active_sessions (last_seen);
 CREATE INDEX IF NOT EXISTS active_sessions_user_page_idx ON active_sessions (user_id, page);
 
--- Function to register or update a user session
+-- Session registration function
 CREATE OR REPLACE FUNCTION register_active_session(
   p_user_id TEXT,
   p_page TEXT
@@ -39,13 +38,13 @@ RETURNS UUID AS $$
 DECLARE
   v_session_id UUID;
 BEGIN
-  -- Try to update an existing session for this user and page
+  -- Try to update existing session
   UPDATE active_sessions
   SET last_seen = NOW()
   WHERE user_id = p_user_id AND page = p_page
   RETURNING session_id INTO v_session_id;
 
-  -- If no session exists, create a new one
+  -- Create new if none exists
   IF v_session_id IS NULL THEN
     INSERT INTO active_sessions (user_id, page)
     VALUES (p_user_id, p_page)
@@ -56,7 +55,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Function to end a session
+-- Session end function
 CREATE OR REPLACE FUNCTION end_session(
   p_user_id TEXT,
   p_page TEXT
@@ -68,7 +67,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Function to count active users (sessions with activity in the last 60 seconds)
+-- Active user counter function
 CREATE OR REPLACE FUNCTION count_active_users(
   p_page TEXT,
   p_seconds INT DEFAULT 60
@@ -86,7 +85,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create cleanup function to remove old sessions
+-- Cleanup function
 CREATE OR REPLACE FUNCTION cleanup_inactive_sessions(p_seconds INT DEFAULT 120)
 RETURNS INT AS $$
 DECLARE
@@ -100,86 +99,68 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Enable RLS (Row Level Security) for active_sessions table
+-- Security setup
 ALTER TABLE active_sessions ENABLE ROW LEVEL SECURITY;
 
--- Create policy allowing anonymous users to insert/update/delete their own sessions
+-- Access policy
 CREATE POLICY "Enable anonymous access" ON active_sessions
   FOR ALL
   USING (true);
 ```
 
-3. Run the query to create the tables and functions
+## Step 3: Realtime Configuration
 
-## Step 3: Configure Supabase for Realtime
+To enable live updates:
 
-1. Go to "Database" → "Replication" in the Supabase dashboard
-2. Enable realtime for the `active_sessions` table
-3. Click "Save" to apply changes
+1. Went to "Database" → "Replication"
+2. Enabled realtime for the `active_sessions` table
+3. Saved changes
 
-## Step 4: Get Your API Keys
+## Step 4: API Key Setup
 
-1. Go to "Project Settings" → "API" in the Supabase dashboard
-2. You'll need two values:
-   - URL: `https://[your-project-id].supabase.co`
-   - `anon` public key: Starts with `eyJh...`
+My API credentials are located at:
 
-## Step 5: Configure Environment Variables
+- Project Settings → API
+- Saved my URL and anon key for the next step
 
-For local development:
+## Step 5: Environment Config
 
-1. Create a `.env.local` file at your project root
-2. Add these variables:
+For local development, I created a `.env.local` file:
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=your-project-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-# For the cleanup API endpoint (optional)
-CLEANUP_SECRET_TOKEN=your-secret-token
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+NEXT_PUBLIC_SUPABASE_URL=my-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=my-anon-key
+CLEANUP_SECRET_TOKEN=my-secret-token
+SUPABASE_SERVICE_ROLE_KEY=my-service-role-key
 ```
 
-For Vercel deployment:
+For Vercel deployment, I added these same environment variables in the Vercel dashboard.
 
-1. Go to your project on Vercel
-2. Navigate to "Settings" → "Environment Variables"
-3. Add the same environment variables:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `CLEANUP_SECRET_TOKEN` (create a secure random string)
-   - `SUPABASE_SERVICE_ROLE_KEY` (from Supabase dashboard)
-4. Deploy your project
+## Step 6: Cleanup Job Setup
 
-## Step 6: Set Up a Cron Job for Session Cleanup (Optional)
+I set up a Vercel cron job to clear inactive sessions:
 
-1. Go to your project on Vercel
-2. Navigate to "Settings" → "Cron Jobs"
-3. Create a new cron job:
-   - Name: "Clean up inactive sessions"
-   - Schedule: `*/5 * * * *` (every 5 minutes)
-   - Command: `curl -X GET "https://your-domain.vercel.app/api/cleanup-sessions?token=YOUR_CLEANUP_SECRET_TOKEN"`
+- Name: "Cleanup inactive sessions"
+- Schedule: Every 5 minutes (`*/5 * * * *`)
+- Command: `curl -X GET "https://pomodoro-timer-alpha-gilt.vercel.app/api/cleanup-sessions?token=MY_SECRET_TOKEN"`
 
-## Step 7: Test the Implementation
+## Step 7: Testing Notes
 
-1. Start your local development server: `npm run dev`
-2. Open your app and check if the user counter is working
-3. Open multiple tabs/browsers to see if the counter increases
-4. Close a tab and wait ~1 minute to see if the counter decreases
-5. Check the Supabase dashboard to verify the data is being stored correctly
+My testing process:
 
-## How It Works
+1. Started local server with `npm run dev`
+2. Verified counter functionality
+3. Tested with multiple browsers
+4. Confirmed counter decreases after closing tabs
+5. Checked database to ensure data was stored correctly
 
-1. When a user visits the site, a unique browser ID is generated and stored in localStorage
-2. The user's presence is registered in the active_sessions table
-3. A heartbeat is sent every 30 seconds to keep the session active
-4. When the user leaves, their session is removed (via beforeunload event)
-5. Any sessions without activity for more than 2 minutes are automatically removed by the cleanup function
-6. The counter shows only users active within the last 60 seconds
+## Implementation Details
 
-## Troubleshooting
+My implementation works like this:
 
-- If the counter doesn't update, check the browser console for errors
-- Verify your environment variables are set correctly
-- Ensure realtime is enabled for the `active_sessions` table
-- Check if the beforeunload event is triggering correctly in your browser
-- Missing user counts after closing tab: This is normal if users close their browsers without triggering beforeunload
+1. Creates unique browser ID on visit (stored in localStorage)
+2. Registers presence in active_sessions table
+3. Sends 30-second heartbeats to keep session active
+4. Removes session on page unload
+5. Auto-cleans sessions inactive for 2+ minutes
+6. Only shows users active within the last minute

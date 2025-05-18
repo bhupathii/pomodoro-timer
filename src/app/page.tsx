@@ -149,9 +149,9 @@ export default function Home() {
         </div>
       )}
       
-      {/* More compact container layout */}
+      {/* Layout container */}
       <div className="flex flex-col items-center justify-center h-screen w-full">
-        {/* Main timer container with improved effects */}
+        {/* Timer panel */}
         <motion.div 
           id="timer-container"
           initial={{ scale: 0.95, opacity: 0 }}
@@ -163,7 +163,7 @@ export default function Home() {
           className={`timer-container relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto ${isFocusMode ? 'border-0 shadow-none bg-transparent' : ''}`}
           style={{...getThemeTransitionStyle, padding: '0.75rem'}}
         >
-          {/* System time display at top of timer container - hidden in focus mode */}
+          {/* Clock display - hidden in focus mode */}
           {!isFocusMode && <Clock showSeconds={true} themeColor={settings.themeColor} />}
           
           {/* Controls and mode selector - hidden in focus mode */}
@@ -196,7 +196,7 @@ export default function Home() {
             )}
           </AnimatePresence>
           
-          {/* Timer display with glass morphism and glitch effects */}
+          {/* Timer display */}
           <motion.div 
             className="relative"
             animate={isGlitching ? {
@@ -228,7 +228,7 @@ export default function Home() {
             onStopAlarm={stopAlarm}
           />
         
-          {/* Progress indicator - hidden in focus mode */}
+          {/* Progress display */}
           <AnimatePresence>
             {!isFocusMode && (
               <motion.div

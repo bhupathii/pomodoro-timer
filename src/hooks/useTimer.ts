@@ -107,7 +107,7 @@ export function useTimer() {
     }
   }, []);
   
-  // Main timer logic
+  // Handle the timer countdown interval
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
@@ -174,7 +174,7 @@ export function useTimer() {
   
   // Separate timer completion logic for mode changes and counter increments
   useEffect(() => {
-    // This effect runs when timeLeft becomes 0
+    // Process the timer completion state
     if (timeLeft === 0 && !isRunning && !isAlarmRinging) {
       console.log("Timer reached zero, mode:", mode);
       

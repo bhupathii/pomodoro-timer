@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-// Create a dummy client if environment variables are not available
+// Fallback implementation when not configured
 const createDummyClient = () => {
   return {
     rpc: () => Promise.resolve({ data: 0, error: null }),
@@ -15,7 +15,7 @@ const createDummyClient = () => {
   };
 };
 
-// Create and export the supabase client, or a dummy client if credentials are missing
+// Use real client or fallback based on available config
 export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : createDummyClient() as any;
